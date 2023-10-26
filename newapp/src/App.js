@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
- 
-//import './App.css';
- 
+
 function App() {
-  const[store,storedvalues]=useState([]);
   const [Text, setText] = useState('');
-  let text = "";
+  const [he, setHe] = useState([]); // Use state for suggestions
+
   useEffect(() => {
-    // Define a function to make the POST request
     const postData = async () => {
       try {
-        const apiUrl = `https://api.textgears.com/grammar?text=${Text}&language=en-GB&whitelist=&dictionary_id=&ai=1&key=BYGaWvMcrEyshCYg`; // Replace with your API URL
+        const apiUrl = `https://api.textgears.com/grammar?text=${Text}&language=en-GB&whitelist=&dictionary_id=&ai=1&key=ScsCsQ9MgjQvx7J3`;
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(Text),
+          body: JSON.stringify({ text: Text }),
         });
- 
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
- 
+
         const result = await response.json();
         console.log('Data posted successfully:', result);
+        const suggestions = result.response.errors.map((error) => error.better).flat();
+        setHe(suggestions);
+       
       } catch (error) {
         console.error('Error posting data:', error);
       }
@@ -33,19 +33,28 @@ function App() {
       postData();
     }
   }, [Text]);
- 
-  // const handleInputChange = (e) => {
-  //   const { text, index } = e.target;
-  //   setText({ ...Text, [text] : index });
-  // };
- 
+
   return (
     <div className="App">
-      <h1>Enter Your Text Here To check your Grammar</h1>
-      <textarea style={{ width: '400px', height: '400px', display: "block" }} onChange={(e) => text = (e.target.value)} />
-      <button onClick={() => setText(text) }>Check Text</button>
+      <h1>Spell Check</h1>
+      <textarea
+        style={{ width: '400px', height: '400px', display: "block" }}
+        onChange={(e) => setText(e.target.value)}
+      />
+      <div>
+        <h2>Suggestions:</h2>
+        <ul>
+          {he.map((suggestion, index) => (
+            <>
+            <li key={index}>{suggestion}</li>
+            </>
+            
+          ))}
+        </ul>
+      </div>
+      <button onClick={() => setText(Text)}>Check Text</button>
     </div>
   );
 }
- 
+
 export default App;
