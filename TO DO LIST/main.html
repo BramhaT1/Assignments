@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+     body {
+    text-align: center;
+    }
+    .b1 {
+    color: #fff;
+    background-color: #333;
+    border: none;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+      .b2 {
+    border: none;
+    height: 50px;
+    width: 100px;
+    border-radius: 25px;
+    color: white;
+    background-color: #ff0077;
+}
+      .back{
+        color:white;
+        background-color: black;
+      }
+     
+      h1{
+        color: whit;
+      }
+      .todo{
+        text-align: center;
+        border-style:ridge;
+        width:70%;
+        margin-left:19%;
+      }
+     
+        
+      
+      input{
+        text-align:;
+        border-style:ridge;
+        width:70%;
+        height: 70px;
+        margin-left:19%;
+        margin-top:60%;
+      }
+      .mylist{
+        text-align: center;
+        margin-left:150px;
+
+      }
+      .sub{
+       position: relative;
+       left: 1%;
+      }
+      .sub h1{
+        align-items: center;
+        border-style:outset;
+        width: 500px;
+        margin-right :60%;
+        margin-left:;
+      }
+       .sub button{
+        color: #ff0077;
+        position: relative;
+       left: 70px;
+      } 
+      #textinput{
+        width:70%;
+      }
+      #container{
+        margin:20px auto;
+        text-align:center;
+        width: 700px;
+        height:100%;
+      }
+    </style>
+     <h1> TO-DO LIST   <button class="b1" onclick="myfunction()">🌙</button></h1>
+</head>
+<script>
+    
+    function myfunction()
+    {
+       document.getElementById("dark").classList.toggle("back");
+       
+    }
+    
+    let i=0;
+         
+    function addtask()
+    {
+        i++;
+        const lis=document.getElementById("textinput");
+        const val=lis.value;
+        //const butt=document.createElement("button");
+       //const dele=document.createElement("button");
+       
+        //butt.textContent="EDIT"
+        const x=document.createElement("h1");
+        const t=document.createTextNode(val);
+        x.textContent=val;
+        x.innerHTML+=`<button class="delete" id=${i}> DELETE</button>`
+        x.innerHTML+=`<button  class="edit" id=${i}> EDIT</button>`
+       // x.appendChild(butt);
+        //x.appendChild(dele);
+        document.getElementById("subdiv").appendChild(x);
+        
+    }
+    const task=document.getElementById("subdiv"); 
+    console.log(task);
+    task.addEventListener("click",handle);
+    function handle(e){
+        const targ=e.target;
+        console.log(targ);
+
+        if(targ.classList.contains("delete"))
+          {
+          targ.parent.remove();
+          }
+
+    }
+    // function dele(button)
+    // {
+    //     const node=document.getElementById()
+    //     const delete=document.getElementById("")
+    // }
+</script>
+<body id="dark">
+  <div id="container">
+       <div class="todo">
+        <h1 >My DAY</h1>
+       </div>
+       
+       <div class="mylist" id="mylis">
+        <h1>My List</h1>
+        <div id="subdiv" class="sub">
+            
+        </div>
+       </div>
+        
+    <input type="text"
+      id="textinput"
+      placeholder="ADD TASK "
+      onchange="TextTrackList"
+      />
+      <br>
+      <br>
+      <button class="b2" onclick="addtask()">ADD TASK</button>
+   
+</div>
+</body>
+</html> 
